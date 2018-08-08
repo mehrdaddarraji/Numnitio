@@ -8,37 +8,52 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
+    private EditText etName, etRegisterEmail, etRegisterPassword, etRegisterConfirmPassword;
+    private Button bRegister;
+    private ProgressBar pbRegisterLoading;
+    private static String registerUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final EditText etName = (EditText) findViewById(R.id.etName);
-        final EditText etRegisterEmail = (EditText) findViewById(R.id.etRegisterEmail);
-        final EditText etRegisterPassword = (EditText) findViewById(R.id.etRegisterPassword);
-        final EditText etRegisterConfirmPassword = (EditText) findViewById(R.id.etRegisterConfirmPassword);
-        final Button bRegister = (Button) findViewById(R.id.bRegister);
+        etName = findViewById(R.id.etName);
+        etRegisterEmail = findViewById(R.id.etRegisterEmail);
+        etRegisterPassword = findViewById(R.id.etRegisterPassword);
+        etRegisterConfirmPassword = findViewById(R.id.etRegisterConfirmPassword);
+        bRegister = findViewById(R.id.bRegister);
+        pbRegisterLoading = findViewById(R.id.pbRegisterLoading);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                bRegister.setVisibility(View.GONE);
+                pbRegisterLoading.setVisibility(View.VISIBLE);
 
-                final String name = etName.getText().toString();
-                final String email = etRegisterEmail.getText().toString();
-                final String password = etRegisterPassword.getText().toString();
-                final String confirmPassword = etRegisterConfirmPassword.getText().toString();
+                final String name = etName.getText().toString().trim();
+                final String email = etRegisterEmail.getText().toString().trim();
+                final String password = etRegisterPassword.getText().toString().trim();
+                final String confirmPassword = etRegisterConfirmPassword.getText().toString().trim();
 
+                /*
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -63,6 +78,30 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterRequest registerRequest = new RegisterRequest(name, email, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
+                */
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                };
+
+                Response.ErrorListener responseErrorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                };
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, registerUrl,
+                        responseListener, responseErrorListener) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        return super.getParams();
+                    }
+                };
+
             }
         });
     }
