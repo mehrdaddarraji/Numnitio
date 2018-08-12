@@ -1,5 +1,5 @@
 <?php
-    $con = mysqli_connect("numnitio.000webhostapp.com", "id6695715_numnitioregister", "Bd789789!", "id6695715_numnitioregister");
+    $con = mysqli_connect("localhost", "root", "root", "numnitio");
 
     $email = $_POST["email"];
     $password = $_POST["password"];

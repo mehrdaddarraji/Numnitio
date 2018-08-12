@@ -5,8 +5,7 @@
       	$password = $_POST["password"];
       	$password = password_hash($password, PASSWORD_DEFAULT);
 
-      	$conn = mysqli_connect("localhost", "root",
-        	"root", "numnitio");
+      	$conn = mysqli_connect("localhost", "root", "root", "numnitio");
     }
 
     $sql = "INSERT INTO user (name, email, password) VALUES ($name, $email,

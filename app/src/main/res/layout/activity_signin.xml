@@ -21,6 +21,7 @@
         android:id="@+id/etLayoutEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_below="@id/ivLogo">
         <EditText
             android:id="@+id/etEmail"
