@@ -1,25 +1,38 @@
 <?php
-    $con = mysqli_connect("localhost", "root", "root", "numnitio");
+    if($_SERVER['REQUEST_METHOD' == 'POST']) {
+    	$email = $_POST["email"];
+      	$password = $_POST["password"];
 
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+        $conn = mysqli_connect("localhost", "root", "root", "numnitio");
+        
+        $sql = "SELECT * FROM user WHERE email = '$email'";
 
-    $statement = mysqli_prepare($con, "SELECT * FROM user WHERE email = ? AND password = ?");
-    mysqli_stmt_bind_param($statement, "ss", $email, $password);
-    mysqli_stmt_execute($statement);
+        $response = mysqli_query($conn, $sql);
 
-    mysqli_stmt_store_result($statement);
-    mysqli_stmt_bind_result($statement, $userID, $name, $email, $password);
+        $result = array();
+        $result['signin'] = array();
 
-    $response = array();
-    $response["success"] = false;
+        if(mysql_num_rows($response) === 1) {
+            $row = mysql_fetch_assoc($response);
 
-    while(mysqli_stmt_fetch($statement)){
-        $response["success"] = true;
-        $response["name"] = $name;
-        $response["email"] = $email;
-        $response["password"] = $password;
+            if(password_verify($password, $row['password'])) {
+                $index['name'] = $row['name'];
+                $index['email'] = $row['email'];
+                array_push($result['signin'], $index);
+
+                $result['success'] = "1";
+      	        $result['message'] = "success";
+                echo json_encode($result);
+
+                mysql_close($conn);
+            } else {
+                $result['success'] = "0";
+      	        $result['message'] = "error";
+                echo json_encode($result);
+
+                mysql_close($conn);
+            }
+        }
+        
     }
-
-    echo json_encode($response);
 ?>
