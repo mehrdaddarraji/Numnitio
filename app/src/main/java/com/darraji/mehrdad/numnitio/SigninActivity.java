@@ -69,8 +69,11 @@ public class SigninActivity extends AppCompatActivity {
                                     for(int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject obj = jsonArray.getJSONObject(i);
                                         String objName = obj.getString("name").trim();
-                                        Toast.makeText(SigninActivity.this, "Sign in successful,\n" +
-                                                objName, Toast.LENGTH_SHORT).show();
+                                        String objEmail = obj.getString("email").trim();
+                                        Intent intentRegister = new Intent(SigninActivity.this, HomeActivity.class);
+                                        intentRegister.putExtra("name", objName);
+                                        intentRegister.putExtra("email", objEmail);
+                                        SigninActivity.this.startActivity(intentRegister);
                                     }
                                 }
                             } catch(JSONException e) {
