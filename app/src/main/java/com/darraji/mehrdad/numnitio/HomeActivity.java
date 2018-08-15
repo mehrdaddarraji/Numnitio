@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         bSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                finish();
             }
         });
 

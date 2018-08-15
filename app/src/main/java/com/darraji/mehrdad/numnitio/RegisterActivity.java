@@ -55,33 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password = etRegisterPassword.getText().toString().trim();
                 final String confirmPassword = etRegisterConfirmPassword.getText().toString().trim();
 
-                /*
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            //Log.d("response: ", response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            //Log.d("success: ", success + "");
-                            if(success) {
-                                Intent intent = new Intent(RegisterActivity.this, SigninActivity.class);
-                                RegisterActivity.this.startActivity(intent);
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                builder.setMessage("Register Failed.").setNegativeButton("Retry", null).create().show();
-                            }
-                        } catch(JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
-                RegisterRequest registerRequest = new RegisterRequest(name, email, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
-                */
-
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
